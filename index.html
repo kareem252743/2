@@ -16,7 +16,7 @@
             pointer-events: none; z-index: 1; overflow: hidden;
         }
         .sand-grain {
-            position: absolute; width: 2px; height: 10px; /* شكل طولي مثل المطر */
+            position: absolute; width: 2px; height: 10px;
             background: rgba(214, 179, 106, 0.3);
             border-radius: 2px;
             animation: rainFall linear infinite;
@@ -26,13 +26,35 @@
             100% { transform: translateY(100vh); }
         }
 
-        /* باقي التصميم بنفس الإعدادات السابقة */
-        .login-screen { position:fixed; inset:0; background:#0b0703; display:flex; justify-content:center; align-items:center; z-index:99999; transition: opacity 0.8s ease; }
-        .login-box { text-align:center; padding:40px; border-radius:20px; background:rgba(255,215,120,.05); border:1px solid rgba(255,220,150,.15); backdrop-filter:blur(10px); width: 90%; max-width: 400px; }
-        .shine-text { background: linear-gradient(to right, #f5d08b 0%, #f5d08b 40%, #fff 50%, #f5d08b 60%, #f5d08b 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: slowShine 5s linear infinite; }
-        @keyframes slowShine { 0% { background-position: 200% center; } 80% { background-position: 200% center; } 100% { background-position: -200% center; } }
-        .login-box button { padding:14px 45px; border:none; border-radius:50px; background:#c48b37; color:white; font-size:16px; cursor:pointer; transition:.3s; text-transform: uppercase; font-weight: bold; }
+        /* --- LOGIN SCREEN (Pharaonic Theme) --- */
+        .login-screen { position:fixed; inset:0; background:radial-gradient(circle at center, #1a140a 0%, #0b0703 100%); display:flex; justify-content:center; align-items:center; z-index:99999; transition: opacity 0.8s ease; }
+        .login-box { 
+            text-align:center; padding:50px; border-radius:10px; 
+            background:rgba(20, 15, 8, 0.8); 
+            border: 2px solid #c48b37;
+            box-shadow: 0 0 30px rgba(196, 139, 55, 0.2), inset 0 0 20px rgba(196, 139, 55, 0.1);
+            width: 90%; max-width: 400px;
+            position: relative;
+        }
+        .login-box::before { content: "𓋹"; position: absolute; top: 10px; left: 50%; transform: translateX(-50%); color: #c48b37; font-size: 24px; }
+        .shine-text { 
+            background: linear-gradient(90deg, #b8860b, #ffd700, #ffffff, #ffd700, #b8860b); 
+            background-size: 300% 100%; 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            animation: slowShine 4s linear infinite;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        @keyframes slowShine { 0% { background-position: 100% 0; } 100% { background-position: -200% 0; } }
         
+        .login-box button { 
+            padding:14px 45px; border:1px solid #c48b37; border-radius:0px; 
+            background:transparent; color:#f5d08b; font-size:16px; cursor:pointer; 
+            transition:.4s; text-transform: uppercase; font-weight: bold; margin-top: 20px;
+        }
+        .login-box button:hover { background:#c48b37; color:#000; box-shadow: 0 0 20px #c48b37; }
+        
+        /* باقي التصميم بنفس الإعدادات السابقة */
         .hero { width:100%; min-height:100vh; position:relative; overflow:hidden; background: linear-gradient(rgba(15,10,5,.94), rgba(15,10,5,.94)), linear-gradient(to bottom, #2b1d0e, #120c05); display: flex; flex-direction: column; }
         .planet { position:absolute; width:min(70vw, 400px); height:min(70vw, 400px); top:50%; left:50%; transform:translate(-50%,-50%); display:flex; justify-content:center; align-items:center; animation:pyramidFloat 6s ease-in-out infinite; z-index:2; }
         .planet::before { content:""; position:absolute; border-left: min(35vw, 200px) solid transparent; border-right: min(35vw, 200px) solid transparent; border-bottom: min(55vw, 340px) solid #c89b52; filter: drop-shadow(0 0 50px rgba(214, 179, 106, 0.3)); }
@@ -75,7 +97,7 @@
 <div class="login-screen" id="loginScreen">
     <div class="login-box">
         <h1 class="shine-text">WELCOME</h1>
-        <p>I AM EGYPTIAN | DIGITAL ARCHITECT</p>
+        <p style="color: #c48b37; margin: 10px 0; letter-spacing: 2px;">I AM EGYPTIAN | DIGITAL ARCHITECT</p>
         <button id="enterBtn">ENTER EXPERIENCE</button>
     </div>
 </div>
@@ -115,9 +137,8 @@
 </section>
 
 <script>
-    // إنشاء المطر الرملي بشكل كثيف
     const sandContainer = document.getElementById('sandContainer');
-    const grainCount = 100; // زيادة العدد ليكون أكثر وضوحاً
+    const grainCount = 100;
     for (let i = 0; i < grainCount; i++) {
         const span = document.createElement('div');
         span.className = 'sand-grain';
