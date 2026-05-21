@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>KARIM - Egyptian Developer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0"/>
+    <title>KARIM - Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
@@ -16,15 +16,17 @@
         body {
             background:#0f0a05;
             color:white;
-            overflow:hidden;
+            /* السماح بالتمرير عند الحاجة في الشاشات الصغيرة */
+            overflow-x:hidden; 
+            overflow-y:auto;
             user-select:none;
         }
 
-        /* شاشة الدخول */
+        /* شاشة الدخول - English */
         .login-screen {
             position:fixed; inset:0; background:#0b0703;
             display:flex; justify-content:center; align-items:center;
-            z-index:99999; transition: opacity 0.6s ease;
+            z-index:99999; transition: opacity 0.8s ease;
         }
 
         .login-box {
@@ -34,65 +36,75 @@
             backdrop-filter:blur(10px); width: 90%; max-width: 400px;
         }
 
-        .login-box h1 { color:#f5d08b; font-size: 45px; margin-bottom:10px; }
+        .login-box h1 { color:#f5d08b; font-size: 40px; margin-bottom:10px; letter-spacing: 2px; }
+        .login-box p { color: #d6b36a; margin-bottom: 20px; font-size: 14px; }
         .login-box button {
-            padding:14px 40px; border:none; border-radius:50px;
+            padding:14px 45px; border:none; border-radius:50px;
             background:#c48b37; color:white; font-size:16px;
-            cursor:pointer; transition:.3s;
+            cursor:pointer; transition:.3s; text-transform: uppercase; font-weight: bold;
         }
 
         /* القسم الرئيسي */
         .hero {
-            width:100%; height:100vh; position:relative; overflow:hidden;
-            background: linear-gradient(rgba(15,10,5,.93), rgba(15,10,5,.93)), 
+            width:100%; min-height:100vh; position:relative; overflow:hidden;
+            background: linear-gradient(rgba(15,10,5,.94), rgba(15,10,5,.94)), 
                         linear-gradient(to bottom, #2b1d0e, #120c05);
+            display: flex; flex-direction: column;
         }
 
         .sand span {
-            position:absolute; width:3px; height:3px;
-            background:rgba(255,215,140,.55); border-radius:50%;
+            position:absolute; width:2px; height:2px;
+            background:rgba(255,215,140,.4); border-radius:50%;
             animation: sandFall linear infinite;
         }
 
         @keyframes sandFall {
             0% { transform:translateY(-10vh) translateX(0); opacity:0; }
-            100% { transform:translateY(110vh) translateX(-100px); opacity:0; }
+            100% { transform:translateY(110vh) translateX(-50px); opacity:0; }
         }
 
-        /* --- تعديل الأهرامات الخلفية لتقترب من الهرم الكبير --- */
+        /* الأهرامات الجانبية المحدثة */
         .bg-pyramid-left, .bg-pyramid-right {
-            position:absolute; bottom: 35%; /* رفعهم قليلاً للأعلى */
-            z-index:1; opacity:.06; pointer-events:none;
-            filter: blur(1px); /* إضافة غبش بسيط ليعطي عمق */
+            position:absolute; bottom: 30%;
+            z-index:1; opacity:.05; pointer-events:none;
         }
 
         .bg-pyramid-left {
-            left: 50%; 
-            transform: translateX(-350px); /* تحريكه بجانب الهرم الكبير من اليسار */
-            border-left: 8vw solid transparent;
-            border-right: 8vw solid transparent;
-            border-bottom: 15vw solid #d6b36a;
+            left: 50%; transform: translateX(-380px);
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 180px solid #d6b36a;
         }
 
         .bg-pyramid-right {
-            left: 50%;
-            transform: translateX(180px); /* تحريكه بجانب الهرم الكبير من اليمين بعيداً عن النص */
-            border-left: 6vw solid transparent;
-            border-right: 6vw solid transparent;
-            border-bottom: 12vw solid #d6b36a;
+            left: 50%; transform: translateX(220px);
+            border-left: 80px solid transparent;
+            border-right: 80px solid transparent;
+            border-bottom: 140px solid #d6b36a;
         }
 
-        .stars {
-            position:absolute; inset:0;
-            background:url("https://www.transparenttextures.com/patterns/stardust.png");
-            opacity:.18; animation: starsMove 120s linear infinite;
+        /* تأثير اللمعة المطور - بطيء كل 3 ثواني */
+        .shine-text {
+            background: linear-gradient(to right, 
+                #f5d08b 0%, 
+                #f5d08b 45%, 
+                #fff 50%, 
+                #f5d08b 55%, 
+                #f5d08b 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 3s ease-in-out infinite;
         }
 
-        @keyframes starsMove { from { background-position: 0 0; } to { background-position: 0 -1000px; } }
+        @keyframes textShine {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
 
         /* الهرم الرئيسي */
         .planet {
-            position:absolute; width:min(65vw, 400px); height:min(65vw, 400px);
+            position:absolute; width:min(60vw, 380px); height:min(60vw, 380px);
             top:50%; left:50%; transform:translate(-50%,-50%);
             display:flex; justify-content:center; align-items:center;
             animation:pyramidFloat 8s ease-in-out infinite; z-index:2;
@@ -100,68 +112,80 @@
 
         .planet::before {
             content:""; position:absolute;
-            border-left: min(32vw, 200px) solid transparent;
-            border-right: min(32vw, 200px) solid transparent;
-            border-bottom: min(55vw, 340px) solid #c89b52;
-            filter: drop-shadow(0 0 30px rgba(255,210,120,.3));
+            border-left: min(30vw, 190px) solid transparent;
+            border-right: min(30vw, 190px) solid transparent;
+            border-bottom: min(50vw, 320px) solid #c89b52;
+            filter: drop-shadow(0 0 40px rgba(214, 179, 106, 0.2));
         }
 
         .planet::after {
-            content:"𓂀"; position:absolute; font-size: min(15vw, 100px);
-            color:#5e350d; top: 45%;
+            content:"𓂀"; position:absolute; font-size: min(12vw, 80px);
+            color:#4d2b0a; top: 45%;
         }
 
         /* المحتوى */
-        nav { width:100%; position:absolute; top:0; padding:25px 5%; display:flex; justify-content:space-between; z-index:10; }
-        .logo { font-size: 32px; font-weight:800; letter-spacing:4px; color:#f5d08b; }
+        nav { width:100%; padding:30px 8%; display:flex; justify-content:center; z-index:10; }
+        .logo { font-size: 36px; font-weight:900; letter-spacing:6px; }
 
         .content {
-            width:100%; height:100%; display:flex; 
+            flex: 1; width:100%; display:flex; 
             align-items:center; justify-content:space-between;
-            padding:0 8%; position:relative; z-index:3;
+            padding:0 10%; position:relative; z-index:3;
         }
 
-        .text { width:40%; text-align: right; }
-        .text h1 { font-size: clamp(35px, 6vw, 70px); line-height:1.1; margin-bottom:20px; background: linear-gradient(to bottom, #fff6d7, #e6b566, #b98032); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .text p { font-size: 15px; color:#f0dfbf; margin-bottom:25px; background:rgba(255,215,120,.05); padding:15px; border-radius:14px; backdrop-filter:blur(4px); border:1px solid rgba(255,220,150,.12); }
+        .text { width:45%; }
+        .text span.sub { letter-spacing:5px; color:#e0b96d; font-size:12px; font-weight: bold; }
+        .text h1 { font-size: clamp(38px, 6vw, 75px); line-height:1; margin:15px 0; font-weight: 800; }
+        .text p { font-size: 16px; color:#f0dfbf; line-height: 1.6; margin-bottom:30px; background:rgba(255,215,120,.03); padding:20px; border-radius:15px; border:1px solid rgba(255,220,150,.1); }
 
-        .ankh-box { width: 30%; display:flex; justify-content:center; align-items:center; animation: floatX 7s ease-in-out infinite; }
-        .ankh { font-size: clamp(100px, 15vw, 250px); color:#d6b36a; text-shadow: 0 0 20px rgba(255,210,120,.5); }
+        .btn-contact {
+            display: inline-block; padding:12px 35px; border-radius:50px; 
+            border:1px solid #d9a34f; color:#fff; text-decoration:none; 
+            background:rgba(255,215,120,.05); transition: 0.3s;
+        }
+        .btn-contact:hover { background:#d9a34f; color: #000; }
+
+        .ankh-box { width: 25%; display:flex; justify-content:center; animation: floatX 7s ease-in-out infinite; }
+        .ankh { font-size: clamp(120px, 18vw, 280px); color:#d6b36a; filter: drop-shadow(0 0 20px rgba(214, 179, 106, 0.4)); }
 
         /* البطاقات السفلية */
         .bottom {
-            position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
-            width:85%; display:grid; grid-template-columns: repeat(4, 1fr);
-            gap: 10px; padding:15px; border-radius:20px;
-            background:rgba(255,215,120,.04); border:1px solid rgba(255,220,150,.12); backdrop-filter:blur(15px); z-index:5;
+            width:100%; display:grid; grid-template-columns: repeat(4, 1fr);
+            gap: 15px; padding:30px 10%; 
+            background: linear-gradient(to top, rgba(15,10,5,1), transparent);
+            z-index:5;
         }
 
-        .card { text-align: center; }
-        .card h2 { color:#f1c574; font-size: 18px; }
-        .card p { color:#f3dfba; font-size: 11px; letter-spacing: 1px; }
+        .card { text-align: center; padding: 15px; background: rgba(255,215,120,0.03); border-radius: 12px; border: 1px solid rgba(255,220,150,0.05); }
+        .card h2 { color:#f5d08b; font-size: 22px; margin-bottom: 5px; }
+        .card p { color:#a89068; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* تعديلات الجوال */
+        /* تعديلات الموبايل - Mobile Experience */
         @media (max-width: 900px) {
-            .bg-pyramid-left { transform: translateX(-150px); bottom: 40%; }
-            .bg-pyramid-right { transform: translateX(80px); bottom: 40%; }
-            .content { flex-direction: column-reverse; justify-content: center; padding-top: 50px; }
+            body { overflow-y: auto; } /* تفعيل النزول في الموبايل */
+            .hero { height: auto; min-height: 100vh; padding-bottom: 100px; }
+            .bg-pyramid-left { transform: translateX(-140px); bottom: 45%; opacity: 0.03; }
+            .bg-pyramid-right { transform: translateX(60px); bottom: 45%; opacity: 0.03; }
+            .content { flex-direction: column-reverse; padding-top: 100px; gap: 40px; }
             .text { width: 100%; text-align: center; }
-            .ankh-box { position: absolute; top: 10%; opacity: 0.3; width: 100%; }
-            .bottom { grid-template-columns: repeat(2, 2fr); }
+            .ankh-box { position: absolute; top: 5%; opacity: 0.2; width: 100%; z-index: -1; }
+            .bottom { grid-template-columns: repeat(2, 1fr); margin-top: 40px; }
+            .planet { opacity: 0.4; }
         }
 
-        @keyframes pyramidFloat { 0%, 100% { transform:translate(-50%,-50%) translateY(0); } 50% { transform:translate(-50%,-50%) translateY(-15px); } }
-        @keyframes floatX { 0%, 100% { transform:translateX(0); } 50% { transform:translateX(20px); } }
+        @keyframes pyramidFloat { 0%, 100% { transform:translate(-50%,-50%) translateY(0); } 50% { transform:translate(-50%,-50%) translateY(-20px); } }
+        @keyframes floatX { 0%, 100% { transform:translateX(0); } 50% { transform:translateX(15px); } }
     </style>
 </head>
 
 <body oncontextmenu="return false;">
 
+<!-- Login Section - English -->
 <div class="login-screen" id="loginScreen">
     <div class="login-box">
-        <h1>WELCOME</h1>
-        <p>اضغط للدخول إلى الواجهة المطورة</p>
-        <button id="enterBtn">دخول</button>
+        <h1>LOGIN</h1>
+        <p>Unlock the Egyptian Experience</p>
+        <button id="enterBtn">ENTER NOW</button>
     </div>
 </div>
 
@@ -171,23 +195,21 @@
 
 <section class="hero">
     <div class="sand" id="sandContainer"></div>
-    <!-- الأهرامات الآن بجانب الهرم الكبير مباشرة -->
     <div class="bg-pyramid-left"></div>
     <div class="bg-pyramid-right"></div>
-    <div class="stars"></div>
     <div class="planet"></div>
 
-    <nav><div class="logo">KARIM</div></nav>
+    <nav>
+        <div class="logo shine-text">KARIM</div>
+    </nav>
 
     <div class="content">
+        <!-- English Content -->
         <div class="text">
-            <div style="letter-spacing:4px; color:#e0b96d; font-size:11px; margin-bottom:10px;">FRONTEND DEVELOPER</div>
-            <h1>I AM <br> EGYPTIAN</h1>
-            <p>Professional Frontend Developer passionate about
-  building modern, fast, and fully responsive websites
-  for all devices, while continuously improving my
-  skills in Full Stack Development</p>
-            <a href="https://wa.me/201063566783" target="_blank" style="padding:10px 25px; border-radius:50px; border:1px solid #d9a34f; color:#fff; text-decoration:none; background:rgba(255,215,120,.1); font-size: 14px;">WhatsApp Contact</a>
+            <span class="sub">FRONTEND SPECIALIST</span>
+            <h1 class="shine-text">I AM <br> EGYPTIAN</h1>
+            <p>I am a professional Frontend Developer dedicated to building high-performance, modern, and fully responsive websites that provide a unique user experience.</p>
+            <a href="https://wa.me/201063566783" target="_blank" class="btn-contact">Get In Touch</a>
         </div>
 
         <div class="ankh-box">
@@ -195,15 +217,17 @@
         </div>
     </div>
 
+    <!-- Cards Section -->
     <div class="bottom">
-        <div class="card"><h2>20</h2><p>YEARS OLD</p></div>
-        <div class="card"><h2>SGU</h2><p>UNIVERSITY</p></div>
-        <div class="card"><h2>EGYPT</h2><p>COUNTRY</p></div>
-        <div class="card"><h2>FRONTEND</h2><p>SPECIALIST</p></div>
+        <div class="card"><h2>20</h2><p>Years Old</p></div>
+        <div class="card"><h2>SGU</h2><p>University</p></div>
+        <div class="card"><h2>Egypt</h2><p>Country</p></div>
+        <div class="card"><h2>Creative</h2><p>Developer</p></div>
     </div>
 </section>
 
 <script>
+    // إنشاء حبات الرمل
     const container = document.getElementById('sandContainer');
     for (let i = 0; i < 40; i++) {
         const span = document.createElement('span');
@@ -221,10 +245,10 @@
         music.volume = 0.2;
         music.play().catch(() => {});
         loginScreen.style.opacity = "0";
-        setTimeout(() => loginScreen.style.display = "none", 600);
+        setTimeout(() => loginScreen.style.display = "none", 800);
     });
 
-    // منع فحص العنصر
+    // حماية السورس كود
     document.onkeydown = function(e) {
         if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) 
         return false;
