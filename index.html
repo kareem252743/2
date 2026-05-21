@@ -1,790 +1,235 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KARIM</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:'Cairo',sans-serif;
-    }
-
-    body{
-      overflow:hidden;
-      background:#0f0a05;
-      color:white;
-      user-select:none;
-    }
-
-    /* شاشة الدخول */
-
-    .login-screen{
-      position:fixed;
-      inset:0;
-      background:#0b0703;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      z-index:99999;
-    }
-
-    .login-box{
-      text-align:center;
-      padding:40px;
-      border-radius:20px;
-      background:rgba(255,215,120,.05);
-      border:1px solid rgba(255,220,150,.15);
-      backdrop-filter:blur(10px);
-    }
-
-    .login-box h1{
-      color:#f5d08b;
-      font-size:45px;
-      margin-bottom:10px;
-    }
-
-    .login-box p{
-      color:#f3dfba;
-      margin-bottom:25px;
-    }
-
-    .login-box button{
-      padding:14px 40px;
-      border:none;
-      border-radius:50px;
-      background:#c48b37;
-      color:white;
-      font-size:16px;
-      cursor:pointer;
-      transition:.3s;
-    }
-
-    .login-box button:hover{
-      transform:scale(1.05);
-
-      box-shadow:
-      0 0 20px rgba(255,190,90,.4);
-    }
-
-    .hero{
-      width:100%;
-      height:100vh;
-      position:relative;
-      overflow:hidden;
-
-      background:
-      linear-gradient(
-      rgba(15,10,5,.93),
-      rgba(15,10,5,.93)
-      ),
-
-      linear-gradient(
-      to bottom,
-      #2b1d0e,
-      #120c05
-      );
-    }
-
-    /* رمال متحركة */
-
-    .sand{
-      position:absolute;
-      inset:0;
-      overflow:hidden;
-      z-index:1;
-      pointer-events:none;
-    }
-
-    .sand span{
-      position:absolute;
-      display:block;
-      width:3px;
-      height:3px;
-      background:rgba(255,215,140,.55);
-      border-radius:50%;
-      filter:blur(.3px);
-
-      animation:sandFall linear infinite;
-    }
-
-    .sand span:nth-child(1){left:5%;animation-duration:11s;animation-delay:-2s;}
-    .sand span:nth-child(2){left:10%;animation-duration:9s;animation-delay:-5s;}
-    .sand span:nth-child(3){left:15%;animation-duration:12s;animation-delay:-3s;}
-    .sand span:nth-child(4){left:20%;animation-duration:10s;animation-delay:-6s;}
-    .sand span:nth-child(5){left:25%;animation-duration:14s;animation-delay:-2s;}
-    .sand span:nth-child(6){left:30%;animation-duration:9s;animation-delay:-7s;}
-    .sand span:nth-child(7){left:35%;animation-duration:13s;animation-delay:-4s;}
-    .sand span:nth-child(8){left:40%;animation-duration:11s;animation-delay:-6s;}
-    .sand span:nth-child(9){left:45%;animation-duration:8s;animation-delay:-2s;}
-    .sand span:nth-child(10){left:50%;animation-duration:12s;animation-delay:-5s;}
-    .sand span:nth-child(11){left:55%;animation-duration:10s;animation-delay:-3s;}
-    .sand span:nth-child(12){left:60%;animation-duration:14s;animation-delay:-8s;}
-    .sand span:nth-child(13){left:65%;animation-duration:9s;animation-delay:-2s;}
-    .sand span:nth-child(14){left:70%;animation-duration:11s;animation-delay:-4s;}
-    .sand span:nth-child(15){left:75%;animation-duration:13s;animation-delay:-6s;}
-    .sand span:nth-child(16){left:80%;animation-duration:9s;animation-delay:-2s;}
-    .sand span:nth-child(17){left:85%;animation-duration:12s;animation-delay:-5s;}
-    .sand span:nth-child(18){left:90%;animation-duration:10s;animation-delay:-3s;}
-    .sand span:nth-child(19){left:95%;animation-duration:14s;animation-delay:-7s;}
-    .sand span:nth-child(20){left:98%;animation-duration:11s;animation-delay:-4s;}
-
-    @keyframes sandFall{
-
-      0%{
-        transform:translateY(-100px) translateX(0px);
-        opacity:0;
-      }
-
-      10%{
-        opacity:.7;
-      }
-
-      100%{
-        transform:translateY(120vh) translateX(-120px);
-        opacity:0;
-      }
-
-    }
-
-    /* الأهرامات الخلفية */
-
-    .bg-pyramid-left,
-    .bg-pyramid-right{
-      position:absolute;
-      z-index:0;
-      opacity:.08;
-      pointer-events:none;
-
-      filter:
-      drop-shadow(0 0 18px rgba(255,210,120,.12));
-    }
-
-    .bg-pyramid-left{
-
-      top:50%;
-      left:50%;
-
-      transform:
-      translate(-320px,-38%);
-
-      width:0;
-      height:0;
-
-      border-left:110px solid transparent;
-      border-right:110px solid transparent;
-      border-bottom:210px solid #d6b36a;
-    }
-
-    .bg-pyramid-right{
-
-      top:50%;
-      left:50%;
-
-      transform:
-      translate(140px,-35%);
-
-      width:0;
-      height:0;
-
-      border-left:95px solid transparent;
-      border-right:95px solid transparent;
-      border-bottom:180px solid #d6b36a;
-    }
-
-    .stars{
-      position:absolute;
-      width:100%;
-      height:100%;
-
-      background:url("https://www.transparenttextures.com/patterns/stardust.png");
-
-      opacity:.18;
-
-      animation: starsMove 120s linear infinite;
-    }
-
-    @keyframes starsMove{
-
-      from{
-        transform:translateY(0);
-      }
-
-      to{
-        transform:translateY(-1000px);
-      }
-
-    }
-
-    .planet{
-      position:absolute;
-      width:420px;
-      height:420px;
-
-      top:50%;
-      left:50%;
-
-      transform:translate(-50%,-50%);
-
-      display:flex;
-      justify-content:center;
-      align-items:center;
-
-      animation:pyramidFloat 8s ease-in-out infinite;
-
-      z-index:2;
-    }
-
-    .planet::before{
-      content:"";
-
-      position:absolute;
-
-      width:0;
-      height:0;
-
-      border-left:210px solid transparent;
-      border-right:210px solid transparent;
-      border-bottom:360px solid #c89b52;
-
-      filter:
-      drop-shadow(0 0 30px rgba(255,210,120,.35))
-      drop-shadow(0 0 90px rgba(255,180,80,.18));
-    }
-
-    .planet::after{
-      content:"𓂀";
-
-      position:absolute;
-
-      font-size:120px;
-      font-weight:bold;
-
-      color:#5e350d;
-
-      top:155px;
-    }
-
-    @keyframes pyramidFloat{
-
-      0%{
-        transform:translate(-50%,-50%) translateY(0px);
-      }
-
-      50%{
-        transform:translate(-50%,-50%) translateY(-12px);
-      }
-
-      100%{
-        transform:translate(-50%,-50%) translateY(0px);
-      }
-
-    }
-
-    nav{
-      width:100%;
-      position:absolute;
-      top:0;
-      left:0;
-      padding:25px 80px;
-
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-
-      z-index:10;
-    }
-
-    .logo{
-      font-size:46px;
-      font-weight:800;
-      letter-spacing:4px;
-
-      color:#f5d08b;
-
-      text-shadow:
-      0 0 12px rgba(255,220,150,.7),
-      0 0 30px rgba(255,180,80,.35);
-    }
-
-    .content{
-      width:100%;
-      height:100%;
-
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-
-      padding:0 100px;
-
-      position:relative;
-      z-index:3;
-    }
-
-    .text{
-      width:38%;
-      margin-left:120px;
-    }
-
-    .small{
-      letter-spacing:5px;
-      color:#e0b96d;
-      margin-bottom:15px;
-      font-size:12px;
-    }
-
-    .text h1{
-      font-size:76px;
-      line-height:1.1;
-      margin-bottom:20px;
-
-      text-transform:uppercase;
-
-      background:
-      linear-gradient(
-      to bottom,
-      #fff6d7,
-      #e6b566,
-      #b98032
-      );
-
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-
-    .text p{
-      font-size:17px;
-      color:#f0dfbf;
-
-      margin-bottom:35px;
-      line-height:2;
-
-      max-width:420px;
-
-      background:rgba(255,215,120,.05);
-
-      padding:14px 18px;
-
-      border-radius:14px;
-
-      backdrop-filter:blur(4px);
-
-      border:1px solid rgba(255,220,150,.12);
-    }
-
-    .explore{
-      display:inline-block;
-
-      padding:14px 35px;
-
-      border-radius:50px;
-
-      border:1px solid #d9a34f;
-
-      color:#fff3d1;
-
-      text-decoration:none;
-
-      transition:.4s;
-
-      background:rgba(255,215,120,.05);
-    }
-
-    .explore:hover{
-
-      background:#c48b37;
-
-      color:white;
-
-      box-shadow:
-      0 0 25px rgba(255,190,90,.5);
-    }
-
-    .frame-wrapper{
-      width:40%;
-
-      display:flex;
-      justify-content:center;
-      align-items:center;
-
-      position:relative;
-    }
-
-    .ankh-box{
-
-      width:350px;
-      height:500px;
-
-      display:flex;
-      justify-content:center;
-      align-items:center;
-
-      position:relative;
-
-      animation: floatX 7s ease-in-out infinite;
-    }
-
-    .ankh{
-
-      font-size:280px;
-
-      color:#d6b36a;
-
-      text-shadow:
-      0 0 20px rgba(255,210,120,.5),
-      0 0 50px rgba(255,180,80,.25),
-      0 0 90px rgba(255,180,80,.15);
-
-      animation:ankhGlow 4s ease-in-out infinite;
-    }
-
-    @keyframes ankhGlow{
-
-      0%{
-        transform:scale(1);
-      }
-
-      50%{
-        transform:scale(1.04);
-      }
-
-      100%{
-        transform:scale(1);
-      }
-
-    }
-
-    @keyframes floatX{
-
-      0%{
-        transform:translateX(0px);
-      }
-
-      50%{
-        transform:translateX(40px);
-      }
-
-      100%{
-        transform:translateX(0px);
-      }
-
-    }
-
-    .bottom{
-      position:absolute;
-
-      bottom:30px;
-      left:50%;
-
-      transform:translateX(-50%);
-
-      width:85%;
-
-      display:flex;
-      justify-content:space-around;
-
-      padding:25px;
-
-      border-radius:20px;
-
-      background:rgba(255,215,120,.04);
-
-      backdrop-filter:blur(15px);
-
-      border:1px solid rgba(255,220,150,.12);
-
-      z-index:5;
-    }
-
-    .card{
-      text-align:center;
-    }
-
-    .card h2{
-      color:#f1c574;
-      margin-bottom:5px;
-    }
-
-    .card p{
-      color:#f3dfba;
-      font-size:14px;
-    }
-
-/* ================= RESPONSIVE MOBILE ADDON ================= */
-
-@media (max-width: 1024px){
-
-  .content{
-    padding: 0 40px;
-  }
-
-  .text{
-    margin-left: 40px;
-  }
-
-  .text h1{
-    font-size: 60px;
-  }
-
-  .planet{
-    width: 320px;
-    height: 320px;
-  }
-
-  .ankh{
-    font-size: 220px;
-  }
-}
-
-@media (max-width: 768px){
-
-  body{
-    overflow:auto;
-  }
-
-  .content{
-    flex-direction: column;
-    text-align: center;
-    padding: 20px;
-    gap: 30px;
-  }
-
-  .text{
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .text h1{
-    font-size: 38px;
-  }
-
-  .text p{
-    max-width: 100%;
-  }
-
-  nav{
-    padding: 15px 20px;
-  }
-
-  .logo{
-    font-size: 28px;
-  }
-
-  .planet{
-    width: 220px;
-    height: 220px;
-  }
-
-  .ankh{
-    font-size: 140px;
-  }
-
-  .bottom{
-    flex-wrap: wrap;
-    position: relative;
-    transform: none;
-    width: 95%;
-    margin: 20px auto;
-  }
-
-  .explore{
-    box-shadow: 0 0 18px rgba(255,190,90,.4);
-  }
-}
-
-@media (max-width: 480px){
-
-  .text h1{
-    font-size: 30px;
-  }
-
-  .small{
-    font-size: 10px;
-    letter-spacing: 3px;
-  }
-
-  .ankh{
-    font-size: 110px;
-  }
-
-  .planet{
-    width: 180px;
-    height: 180px;
-  }
-
-  .login-box h1{
-    font-size: 28px;
-  }
-
-  .login-box{
-    padding: 25px;
-  }
-}
-
-
-
-
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>KARIM - Egyptian Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin:0; padding:0; box-sizing:border-box;
+            font-family:'Cairo', sans-serif;
+            -webkit-touch-callout: none;
+        }
+
+        body {
+            background:#0f0a05;
+            color:white;
+            overflow:hidden;
+            user-select:none;
+        }
+
+        /* شاشة الدخول */
+        .login-screen {
+            position:fixed; inset:0; background:#0b0703;
+            display:flex; justify-content:center; align-items:center;
+            z-index:99999; transition: opacity 0.6s ease;
+        }
+
+        .login-box {
+            text-align:center; padding:40px;
+            border-radius:20px; background:rgba(255,215,120,.05);
+            border:1px solid rgba(255,220,150,.15);
+            backdrop-filter:blur(10px); width: 90%; max-width: 400px;
+        }
+
+        .login-box h1 { color:#f5d08b; font-size: 45px; margin-bottom:10px; }
+        .login-box button {
+            padding:14px 40px; border:none; border-radius:50px;
+            background:#c48b37; color:white; font-size:16px;
+            cursor:pointer; transition:.3s;
+        }
+
+        /* القسم الرئيسي */
+        .hero {
+            width:100%; height:100vh; position:relative; overflow:hidden;
+            background: linear-gradient(rgba(15,10,5,.93), rgba(15,10,5,.93)), 
+                        linear-gradient(to bottom, #2b1d0e, #120c05);
+        }
+
+        .sand span {
+            position:absolute; width:3px; height:3px;
+            background:rgba(255,215,140,.55); border-radius:50%;
+            animation: sandFall linear infinite;
+        }
+
+        @keyframes sandFall {
+            0% { transform:translateY(-10vh) translateX(0); opacity:0; }
+            100% { transform:translateY(110vh) translateX(-100px); opacity:0; }
+        }
+
+        /* --- تعديل الأهرامات الخلفية لتقترب من الهرم الكبير --- */
+        .bg-pyramid-left, .bg-pyramid-right {
+            position:absolute; bottom: 35%; /* رفعهم قليلاً للأعلى */
+            z-index:1; opacity:.06; pointer-events:none;
+            filter: blur(1px); /* إضافة غبش بسيط ليعطي عمق */
+        }
+
+        .bg-pyramid-left {
+            left: 50%; 
+            transform: translateX(-350px); /* تحريكه بجانب الهرم الكبير من اليسار */
+            border-left: 8vw solid transparent;
+            border-right: 8vw solid transparent;
+            border-bottom: 15vw solid #d6b36a;
+        }
+
+        .bg-pyramid-right {
+            left: 50%;
+            transform: translateX(180px); /* تحريكه بجانب الهرم الكبير من اليمين بعيداً عن النص */
+            border-left: 6vw solid transparent;
+            border-right: 6vw solid transparent;
+            border-bottom: 12vw solid #d6b36a;
+        }
+
+        .stars {
+            position:absolute; inset:0;
+            background:url("https://www.transparenttextures.com/patterns/stardust.png");
+            opacity:.18; animation: starsMove 120s linear infinite;
+        }
+
+        @keyframes starsMove { from { background-position: 0 0; } to { background-position: 0 -1000px; } }
+
+        /* الهرم الرئيسي */
+        .planet {
+            position:absolute; width:min(65vw, 400px); height:min(65vw, 400px);
+            top:50%; left:50%; transform:translate(-50%,-50%);
+            display:flex; justify-content:center; align-items:center;
+            animation:pyramidFloat 8s ease-in-out infinite; z-index:2;
+        }
+
+        .planet::before {
+            content:""; position:absolute;
+            border-left: min(32vw, 200px) solid transparent;
+            border-right: min(32vw, 200px) solid transparent;
+            border-bottom: min(55vw, 340px) solid #c89b52;
+            filter: drop-shadow(0 0 30px rgba(255,210,120,.3));
+        }
+
+        .planet::after {
+            content:"𓂀"; position:absolute; font-size: min(15vw, 100px);
+            color:#5e350d; top: 45%;
+        }
+
+        /* المحتوى */
+        nav { width:100%; position:absolute; top:0; padding:25px 5%; display:flex; justify-content:space-between; z-index:10; }
+        .logo { font-size: 32px; font-weight:800; letter-spacing:4px; color:#f5d08b; }
+
+        .content {
+            width:100%; height:100%; display:flex; 
+            align-items:center; justify-content:space-between;
+            padding:0 8%; position:relative; z-index:3;
+        }
+
+        .text { width:40%; text-align: right; }
+        .text h1 { font-size: clamp(35px, 6vw, 70px); line-height:1.1; margin-bottom:20px; background: linear-gradient(to bottom, #fff6d7, #e6b566, #b98032); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .text p { font-size: 15px; color:#f0dfbf; margin-bottom:25px; background:rgba(255,215,120,.05); padding:15px; border-radius:14px; backdrop-filter:blur(4px); border:1px solid rgba(255,220,150,.12); }
+
+        .ankh-box { width: 30%; display:flex; justify-content:center; align-items:center; animation: floatX 7s ease-in-out infinite; }
+        .ankh { font-size: clamp(100px, 15vw, 250px); color:#d6b36a; text-shadow: 0 0 20px rgba(255,210,120,.5); }
+
+        /* البطاقات السفلية */
+        .bottom {
+            position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+            width:85%; display:grid; grid-template-columns: repeat(4, 1fr);
+            gap: 10px; padding:15px; border-radius:20px;
+            background:rgba(255,215,120,.04); border:1px solid rgba(255,220,150,.12); backdrop-filter:blur(15px); z-index:5;
+        }
+
+        .card { text-align: center; }
+        .card h2 { color:#f1c574; font-size: 18px; }
+        .card p { color:#f3dfba; font-size: 11px; letter-spacing: 1px; }
+
+        /* تعديلات الجوال */
+        @media (max-width: 900px) {
+            .bg-pyramid-left { transform: translateX(-150px); bottom: 40%; }
+            .bg-pyramid-right { transform: translateX(80px); bottom: 40%; }
+            .content { flex-direction: column-reverse; justify-content: center; padding-top: 50px; }
+            .text { width: 100%; text-align: center; }
+            .ankh-box { position: absolute; top: 10%; opacity: 0.3; width: 100%; }
+            .bottom { grid-template-columns: repeat(2, 2fr); }
+        }
+
+        @keyframes pyramidFloat { 0%, 100% { transform:translate(-50%,-50%) translateY(0); } 50% { transform:translate(-50%,-50%) translateY(-15px); } }
+        @keyframes floatX { 0%, 100% { transform:translateX(0); } 50% { transform:translateX(20px); } }
+    </style>
 </head>
 
-<body>
-
-<!-- شاشة الدخول -->
+<body oncontextmenu="return false;">
 
 <div class="login-screen" id="loginScreen">
-
-  <div class="login-box">
-
-    <h1>WELCOME</h1>
-
-    <p>Click To Enter</p>
-
-    <button id="enterBtn">
-      LOGIN
-    </button>
-
-  </div>
-
+    <div class="login-box">
+        <h1>WELCOME</h1>
+        <p>اضغط للدخول إلى الواجهة المطورة</p>
+        <button id="enterBtn">دخول</button>
+    </div>
 </div>
 
-<!-- الموسيقى -->
-
 <audio id="bgMusic" loop>
-  <source src="one.mp3" type="audio/mpeg">
+    <source src="one.mp3" type="audio/mpeg">
 </audio>
 
-<script>
-
-const enterBtn = document.getElementById("enterBtn");
-
-const loginScreen = document.getElementById("loginScreen");
-
-const music = document.getElementById("bgMusic");
-
-music.volume = 0.2;
-
-enterBtn.addEventListener("click", () => {
-
-  music.play();
-
-  loginScreen.style.opacity = "0";
-
-  loginScreen.style.pointerEvents = "none";
-
-  setTimeout(() => {
-    loginScreen.style.display = "none";
-  }, 500);
-
-});
-
-</script>
-
 <section class="hero">
+    <div class="sand" id="sandContainer"></div>
+    <!-- الأهرامات الآن بجانب الهرم الكبير مباشرة -->
+    <div class="bg-pyramid-left"></div>
+    <div class="bg-pyramid-right"></div>
+    <div class="stars"></div>
+    <div class="planet"></div>
 
-  <!-- الرمال -->
+    <nav><div class="logo">KARIM</div></nav>
 
-  <div class="sand">
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-  </div>
-
-  <!-- أهرامات الخلفية -->
-
-  <div class="bg-pyramid-left"></div>
-  <div class="bg-pyramid-right"></div>
-
-  <div class="stars"></div>
-
-  <!-- الهرم الرئيسي -->
-
-  <div class="planet"></div>
-
-  <nav>
-
-    <div class="logo">
-      KARIM
-    </div>
-
-  </nav>
-
-  <div class="content">
-
-    <div class="text">
-
-      <div class="small">
-        FRONTEND DEVELOPER
-      </div>
-
-      <h1>
-        I AM <br>
-        EGYPTIAN
-      </h1>
-
-      <p>
-  Professional Frontend Developer passionate about
+    <div class="content">
+        <div class="text">
+            <div style="letter-spacing:4px; color:#e0b96d; font-size:11px; margin-bottom:10px;">FRONTEND DEVELOPER</div>
+            <h1>I AM <br> EGYPTIAN</h1>
+            <p>Professional Frontend Developer passionate about
   building modern, fast, and fully responsive websites
   for all devices, while continuously improving my
-  skills in Full Stack Development
-</p>
-
-      <a
-        href="https://wa.me/201063566783"
-        class="explore"
-        target="_blank">
-
-        WhatsApp Contact
-
-      </a>
-
-    </div>
-
-    <div class="frame-wrapper">
-
-      <div class="ankh-box">
-
-        <div class="ankh">
-          ☥
+  skills in Full Stack Development</p>
+            <a href="https://wa.me/201063566783" target="_blank" style="padding:10px 25px; border-radius:50px; border:1px solid #d9a34f; color:#fff; text-decoration:none; background:rgba(255,215,120,.1); font-size: 14px;">WhatsApp Contact</a>
         </div>
 
-      </div>
-
+        <div class="ankh-box">
+            <div class="ankh">☥</div>
+        </div>
     </div>
 
-  </div>
-
-  <div class="bottom">
-
-    <div class="card">
-      <h2>20</h2>
-      <p>YEARS OLD</p>
+    <div class="bottom">
+        <div class="card"><h2>20</h2><p>YEARS OLD</p></div>
+        <div class="card"><h2>SGU</h2><p>UNIVERSITY</p></div>
+        <div class="card"><h2>EGYPT</h2><p>COUNTRY</p></div>
+        <div class="card"><h2>FRONTEND</h2><p>SPECIALIST</p></div>
     </div>
-
-    <div class="card">
-      <h2>SGU</h2>
-      <p>UNIVERSITY</p>
-    </div>
-
-    <div class="card">
-      <h2>EGYPT</h2>
-      <p>COUNTRY</p>
-    </div>
-
-    <div class="card">
-      <h2>FRONTEND</h2>
-      <p>SPECIALIST</p>
-    </div>
-
-  </div>
-
 </section>
+
+<script>
+    const container = document.getElementById('sandContainer');
+    for (let i = 0; i < 40; i++) {
+        const span = document.createElement('span');
+        span.style.left = Math.random() * 100 + '%';
+        span.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        span.style.animationDelay = (Math.random() * -10) + 's';
+        container.appendChild(span);
+    }
+
+    const enterBtn = document.getElementById("enterBtn");
+    const loginScreen = document.getElementById("loginScreen");
+    const music = document.getElementById("bgMusic");
+
+    enterBtn.addEventListener("click", () => {
+        music.volume = 0.2;
+        music.play().catch(() => {});
+        loginScreen.style.opacity = "0";
+        setTimeout(() => loginScreen.style.display = "none", 600);
+    });
+
+    // منع فحص العنصر
+    document.onkeydown = function(e) {
+        if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) 
+        return false;
+    };
+</script>
 
 </body>
 </html>
